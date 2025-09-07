@@ -52,6 +52,15 @@ public class Tablero {
         return celdas[Y][X];
     }
 
+    public String getCodigoCelda(int X, int Y){
+        if (!celdas[Y][X].getIs_matched()){
+            return ListaEmojis.getCodigoEmojiOculto();
+        }
+        else{
+            return evaluarTarjeta(X, Y, true).getEmoji_code();
+        }
+    }
+
     public boolean emparejarTarjetas(int X1, int Y1, int X2, int Y2){
         if (X1 == X2 && Y1 == Y2) {
             throw new InvalidParameterException("No puede evaluar una tarjeta consigo misma.");
@@ -77,5 +86,9 @@ public class Tablero {
                 return false;
             }
         }
+    }
+
+    public int getTamano() {
+        return tamano;
     }
 }
