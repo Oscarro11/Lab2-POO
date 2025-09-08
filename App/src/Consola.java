@@ -10,7 +10,7 @@ public class Consola {
     public void mostrarTablero(){
         System.setOut(new java.io.PrintStream(System.out, true, StandardCharsets.UTF_8));
 
-        System.out.println("\n");
+        System.out.print("\n");
         System.out.printf("%-3s", "");
         for (int i=0; i<tablero.getTamano(); i++){
             System.out.printf("%-3s", i+1);
@@ -24,6 +24,5 @@ public class Consola {
             }
             System.out.print("\n");
         }
-        System.out.println("\n");
     }   
 }

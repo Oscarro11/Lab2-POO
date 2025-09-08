@@ -12,6 +12,7 @@ public class Tarjeta{
     public boolean getIs_matched(){
         return is_matched;  
     }
+
     public void setIs_matched(boolean is_matched) {
         this.is_matched = is_matched;
     }

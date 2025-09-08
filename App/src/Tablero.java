@@ -7,9 +7,13 @@ public class Tablero {
     private final Random RNG = new Random();
     private ArrayList<DistribuidorTarjeta> lista_distribuidores = new ArrayList<DistribuidorTarjeta>();
     private Tarjeta[][] celdas;  
+    private Tarjeta tarjeta_revelada_1;
+    private Tarjeta tarjeta_revelada_2;
+    private int pares_pendientes;
 
     public Tablero(int tamano){
         this.tamano = tamano;
+        this.pares_pendientes = (tamano * tamano)/2;
         this.celdas = new Tarjeta[tamano][tamano];
         generarTarjetas();
     }
@@ -28,7 +32,7 @@ public class Tablero {
     }
 
     private void generarTarjetas(){
-        for (int i=0; i<(tamano*tamano) / 2; i++){
+        for (int i=0; i<pares_pendientes; i++){
            lista_distribuidores.add(new DistribuidorTarjeta(new Tarjeta(ListaEmojis.getUnusedEmojiCode())));
         }
 
@@ -46,18 +50,18 @@ public class Tablero {
 
         else if (!can_be_already_revealed){
                 if (celdas[Y][X].getIs_matched()){
-                    throw new InvalidParameterException("La tarjeta en las coordenadas " + X + Y + "ya ha sido revelada.");
+                    throw new InvalidParameterException("La tarjeta en las coordenadas x=" + X  + " y="+ Y + " ya ha sido revelada.");
             }
         }
         return celdas[Y][X];
     }
 
     public String getCodigoCelda(int X, int Y){
-        if (!celdas[Y][X].getIs_matched()){
-            return ListaEmojis.getCodigoEmojiOculto();
+        if (celdas[Y][X].getIs_matched() || celdas[Y][X] == tarjeta_revelada_1 || celdas[Y][X] == tarjeta_revelada_2){
+            return evaluarTarjeta(X, Y, true).getEmoji_code();
         }
         else{
-            return evaluarTarjeta(X, Y, true).getEmoji_code();
+            return ListaEmojis.getCodigoEmojiOculto();
         }
     }
 
@@ -77,12 +81,18 @@ public class Tablero {
                 throw e;
             }
 
+            tarjeta_revelada_1 = null;
+            tarjeta_revelada_2 = null;
+
             if (tarjeta1.getEmoji_code().equals(tarjeta2.getEmoji_code())) {
                 tarjeta1.setIs_matched(true);
                 tarjeta2.setIs_matched(true);
+                pares_pendientes += -1;
                 return true;
             }
             else{
+                tarjeta_revelada_1 = tarjeta1;
+                tarjeta_revelada_2 = tarjeta2;
                 return false;
             }
         }
@@ -90,5 +100,9 @@ public class Tablero {
 
     public int getTamano() {
         return tamano;
+    }
+
+    public int getPares_pendientes() {
+        return pares_pendientes;
     }
 }
