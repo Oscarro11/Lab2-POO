@@ -1,5 +1,7 @@
 public class Tarjeta{
+    //El codigo de emoji usa el formato de Unicode escape, en el formato \\uXXXX\\uXXXX
     private final String emoji_code;
+    //Este atributo se usa para saber si la tarjeta aun puede dar puntos o no.
     private boolean is_matched = false;
 
     public Tarjeta(String emoji_code){

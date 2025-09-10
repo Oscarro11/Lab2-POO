@@ -2,6 +2,11 @@ public class Controlador {
     private Tablero tablero;
     private final Jugador jugador_1;
     private final Jugador jugador_2;
+    /**
+    La forma en que se sabe quien debe jugar el turno es por medio de una referencia al "jugador activo".
+    Cada vez que se intenta adivinar una carta, el jugador activo gana un punto o se cambia la referencia 
+    de quien es el jugador activo.
+    **/
     private Jugador jugador_activo;
     private Consola consola;
 
@@ -17,6 +22,8 @@ public class Controlador {
         consola.mostrarTablero();
     }
 
+    //En este metodo se ingresan dos coordenadas, y se verifica si ambas son pares o no. En caso de ser pares, el jugador
+    //activo gana un punto. De lo contrario, se cambia quien es el jugador activo.
     public boolean jugarTurno(int X1, int Y1, int X2, int Y2){
         boolean resultadoParejas;
         
@@ -46,6 +53,7 @@ public class Controlador {
         }
     }
 
+    //Este metodo muestra la informacion del jugador activo, es decir, muestra su nombre, ronda ganadas y puntos de esta ronda
     public String mostrarInfoJugador(){
         return "Estadisticas de " + jugador_activo.getNombre() + ":"
                 + "\n" + jugador_activo.getNombre() + " ha ganado " + jugador_activo.getPuntos_ronda() + " puntos en esta ronda."
@@ -53,6 +61,8 @@ public class Controlador {
     }
 
     public String mostrarResultadosJugadores(){
+        //Este metodo se usa cuando el juego acaba, con lo que se muestra las estadisticas de ambos jugadores y se menciona quien gano
+        //la sesion de juego
         String mensaje_ganador;
         if (jugador_1.getRondas_ganadas() > jugador_2.getRondas_ganadas()) {
             mensaje_ganador = "¡" + jugador_1.getNombre() + " ha ganado el juego de memoria!";
@@ -76,7 +86,7 @@ public class Controlador {
         }
         else{
             jugador_1.resultadoRonda(jugador_1.getRondas_ganadas() > jugador_2.getRondas_ganadas());
-            jugador_1.resultadoRonda(jugador_1.getRondas_ganadas() < jugador_2.getRondas_ganadas());
+            jugador_2.resultadoRonda(jugador_1.getRondas_ganadas() < jugador_2.getRondas_ganadas());
             return true;
         }
     }

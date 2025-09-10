@@ -15,6 +15,7 @@ public class Jugador {
         this.puntos_ronda = 0;
     }
 
+    //Este metodo le asigna 1 ronda ganada al jugador, y reinicia sus puntos de ronda
     public void resultadoRonda(boolean gano_ronda){
         if (gano_ronda) {
             this.rondas_ganadas += 1;
